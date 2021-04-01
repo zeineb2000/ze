@@ -1,0 +1,57 @@
+{% extends './backend/backbody.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+    {% for message in app.flashes('info')  %}
+
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% if discount %}
+        <div class="card">
+        <h3 class="card-title">LISTE DES Discounts</h3>
+        <div class="card-body p-0">
+            <table id="chauffeur" class="table table-striped">
+                <thead>
+                <tr>
+                    <th style="width: 10px">#</th>
+                    <th>percentege</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for d in discount %}
+                    <tr>
+                        <td>{{ d.id }}</td>
+                        <td>{{ d.percentege }}</td>
+                        <td>
+                            <a class="fas fa-edit" href="{{ path('edit_discount',{'id':d.id}) }}" ></a>
+                        </td>
+                        <td>
+                            <a class="fas fa-trash-alt" href="{{ path('delete_discount',{'id':d.id}) }} " ></a>
+                        </td>
+
+                        </td>
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+    {% else %}
+        <div class="container">
+            <table>
+                <thead>
+                <th>aucune discount trouvée</th>
+                <th><a class="example_b" href="{{ path('add_discount') }}">Ajouter un discount</a></th>
+                </thead>
+            </table>
+
+        </div>
+
+    {% endif %}
+{% endblock content %}

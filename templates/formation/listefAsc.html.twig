@@ -1,0 +1,80 @@
+{% extends './backend/backbody.html.twig' %}
+
+            {% block title %}{% endblock %}
+
+            {% block content %}
+                {% for message in app.flashes('info')  %}
+
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                {% if formation %}
+                    <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">LISTE DES Formations</h3>
+                    </div>
+                    <div class="container">
+                    <a class="btn btn-block btn-success" href="{{ path('list_formationfrontASC') }}" >Order By prix asc </a>
+                    <a class="btn btn-block btn-success" href="{{ path('list_formationfrontDESC') }}" >Order By prix Desc </a>
+                    <div class="form-group">
+                    <div class="card-body p-0">
+                        <table id="chauffeur" class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th style="width: 10px">#</th>
+                                <th>titre</th>
+                                <th>photo</th>
+                                <th>prix</th>
+                                <th>description</th>
+                                <th>place left</th>
+                                <th>location</th>
+
+                                <th>Action</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for f in formation %}
+                                <tr>
+                                    <td>{{ f.id }}</td>
+                                    <td>{{ f.titre }}</td>
+                                    <td><img src="{{ asset('images/formation/'~f.getImageName) }}" alt="photo" style="height: 100px;"></td>
+                                    <td>{{ f.prix }}</td>
+                                    <td>{{ f.getDescription }}</td>
+                                    <td>{{ f.getPlace }}</td>
+                                    <td>{{ f.location }}</td>
+                                    {#   <td>
+                            <a class="btn btn-block btn-info" href="{{ path('detail_hotel',{'idHotel':h.idHotel}) }}" > detail</a>
+
+                        </td>
+                                    #}
+                                    <td>
+                                        <a class="fas fa-edit" href="{{ path('edit_formation',{'id':f.id}) }}" ></a>
+                                    </td>
+                                    <td>
+                                        <a class="fas fa-trash-alt" href="{{ path('delete_formation',{'id':f.id}) }} " ></a>
+                                    </td>
+
+                                    </td>
+                                </tr>
+
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                {% else %}
+                    <div class="container">
+                        <table>
+                            <thead>
+                            <th>aucune formation trouvée</th>
+                            <th><a class="example_b" href="{{ path('add_formation') }}">Ajouter un formation</a></th>
+                            </thead>
+                        </table>
+
+                    </div>
+
+                {% endif %}
+            {% endblock content %}

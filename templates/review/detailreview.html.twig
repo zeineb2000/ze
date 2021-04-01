@@ -1,0 +1,39 @@
+{% extends './backend/backbody.html.twig' %}
+{% block content %}
+    <div class="card">
+    <div class="card-header">
+        <h3 class="card-title">LISTE DES reviews</h3>
+    </div>
+
+    <div class="card-body p-0">
+        <table id="review" class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>rating</th>
+                <th>description</th>
+                <th>IDF</th>
+
+
+            </tr>
+            </thead>
+            <tr>
+
+                <td>{{ r.id }}</td>
+                <td>{{ r.rating }}</td>
+                <td>{{ r.description }}</td>
+              {#  <td>{{ r.idformation}}</td>#}
+
+
+            </tr>
+
+
+        </table>
+        <div align="center">
+            <a class="btn btn-block btn-info" href="{{ path('liste_reivew') }}" >retour</a>
+        </div>
+    </div>
+
+
+
+{% endblock content %}

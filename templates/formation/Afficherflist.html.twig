@@ -1,0 +1,149 @@
+{% extends 'frontend/frontheaderfooter.html.twig' %}
+{% block styles %}
+<style>
+.star-rate {
+    display: inline-block;
+    position: relative;
+}
+.star-rate-base {
+    color: white;
+}
+.star-rate-span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    white-space: nowrap;
+    display: inline-block;
+    overflow: hidden;
+}
+.star-rate-second {
+    color: green;
+}
+</style>
+{% endblock %}
+{% block content %}
+
+        <div class="container">
+            <div class="row mt-3 mb-5">
+                <h3 style="text-align:center">les formations</h3>
+
+            </div>
+
+            <h2 >Search A Formation !</h2>
+
+            <div class="container">
+
+
+                <div class="input-group custom-search-form">
+
+                    <input type="text" id="search" class="form-control pl-3" placeholder="Search here">
+                </div>
+                <!-- /input-group -->
+            <ul class="nav" id="side-menu">
+                <li>
+                    <a href="#"><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level" id="entitiesNav">
+                    </ul>
+                </li>
+            </ul><br><br><br><br>
+    <!-- slider Area End-->
+        <!-- Favourite Places Start -->
+            <div class="float-right">
+                <a class="btn btn-primary" href="{{ path('list_formationfront_list') }}">list</a>
+                <a class="btn btn-primary" href="{{ path('list_formationfront') }}">grid</a>
+            </div>
+            <div class="row" style="margin-top: 65px;">
+                <div class="col-md-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Photo</th>
+                                <th scope="col">Descripton</th>
+                                <th scope="col">Place left</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for f in formation %}
+                            <tr>
+                                <th scope="row">{{ f.id }}</th>
+                                <td>{{ f.titre }}</td>
+                                <td><img  src="{{ asset('images/formation/') }}{{ f.imageName }}" height="100" width="100" style="cursor: default; "></td>
+                                <td>{{ f.description }}</td>
+                                <td>{{ f.place }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+    <div class="button_cont"><a class="example_b" href="{{ path('frontacceuil') }}" >retour</a></div>
+
+
+    <!--===============================================================================================-->
+    <script src="{{ asset('acss/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+    <!--===============================================================================================-->
+    <script src="{{ asset('acss/vendor/bootstrap/js/popper.js') }}"></script>
+    <script src="{{ asset('acss/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <!--===============================================================================================-->
+    <script src="{{ asset('acss/vendor/select2/select2.min.js') }}"></script>
+    <!--===============================================================================================-->
+    <script src="{{ asset('acss/js/main.js') }}"></script>
+
+
+    <script src="{{ asset('JS/jquery.js') }}"></script>
+    <script src="{{ asset('JS/jquery.js') }}"></script>
+    <script>
+        jQuery(document).ready(function() {
+            var searchRequest = null;
+            $("#search").keyup(function() {
+                var minlength = 1;
+                var that = this;
+                var value = $(this).val();
+                var entitySelector = $("#entitiesNav").html('');
+                if (value.length >= minlength ) {
+                    if (searchRequest != null)
+                        searchRequest.abort();
+                    searchRequest = $.ajax({
+                        type: "GET",
+                        url: "{{ path('ajaxsearch') }}",
+                        data: {
+                            'q' : value
+                        },
+                        dataType: "text",
+                        success: function(msg){
+                            //we need to check if the value is the same
+                            if (value===$(that).val()) {
+                                var result = JSON.parse(msg);
+                                $.each(result, function(key, arr) {
+                                    $.each(arr, function(id, value) {
+                                        if (key === 'formation') {
+                                            if (id !== 'error') {
+                                                console.log(value);
+                                                entitySelector.append('<li>' +
+                                                    '<h5><b>  '+value[0]+  ' '+value[0]+  '</b></h5>')   ;
+                                            } else {
+                                                entitySelector.append('<li class="errorLi">'+value+'</li>');
+                                            }
+                                        }
+                                    });
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+{% endblock content %}

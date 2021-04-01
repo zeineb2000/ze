@@ -1,0 +1,27 @@
+{% extends './backend/backbody.html.twig' %}
+{% block content %}
+    <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+    <script src="//code.jquery.com/jquery.js"></script>
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
+
+
+    {{ form_start(form,{attr:{'id':'form'}}) }}
+
+    <div class="container">
+        <div class="form-group">
+            {{ form_label(form.percentege,"percentege:") }}
+
+            {{ form_widget(form.percentege, {attr: {class:'form-control'}}) }}
+        </div>
+    </div>
+    <div class="card-footer">
+        <button type="submit" href="{{ path('add_discount') }}" class="btn btn-primary">Submit</button>
+
+    </div>
+
+
+
+
+    {{ form_end(form) }}
+
+{% endblock content %}

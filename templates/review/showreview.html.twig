@@ -1,0 +1,63 @@
+{% extends './backend/backbody.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+    {% if review %}
+        <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">LISTE DES reviews</h3>
+        </div>
+        <div class="card-body p-0">
+            <table id="chauffeur" class="table table-striped">
+                <thead>
+                <tr>
+                    <th style="width: 10px">#</th>
+                    <th>formation</th>
+                    <th>rating</th>
+                    <th>description</th>
+                    <th>Action</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for r in review %}
+                    <tr>
+                        <td>{{ r.id }}</td>
+                        <td>{{ r.idformation.titre }}</td>
+                        <td>{{ r.rating }}</td>
+                        <td>{{ r.description }}</td>
+
+                         {#<td>
+                            <a class="btn btn-block btn-info" href="{{ path('detail_review',{'id':r.id}) }}" > detail</a>
+
+                        </td> #}
+                        <td>
+                            <a class="fas fa-edit" href="{{ path('edit_review',{'id':r.id}) }}" ></a>
+                        </td>
+                        <td>
+                            <a class="fas fa-trash-alt" href="{{ path('delete_review',{'id':r.id}) }} " ></a>
+                        </td>
+
+                        </td>
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+    {% else %}
+        <div class="container">
+            <table>
+                <thead>
+                <th>aucune review</th>
+                <th><a class="example_b" href="{{ path('add_review') }}">Ajouter une review</a></th>
+                </thead>
+            </table>
+
+        </div>
+
+    {% endif %}
+{% endblock content %}

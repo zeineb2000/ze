@@ -1,0 +1,25 @@
+{% extends './backend/backbody.html.twig' %}
+{% block content %}
+    {% for message in app.flashes('info')  %}
+    <div class="alert alert-warning">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {{ form_start(form,{attr:{'id':'form'}}) }}
+    <div class="container">
+        <div class="form-group">
+            {{ form_label(form.percentege,"percentege:") }}
+
+            {{ form_widget(form.percentege, {attr: {class:'form-control'}}) }}
+        </div>
+    </div>
+    <div class="card-footer">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+
+
+
+    {{ form_end(form) }}
+
+{% endblock content %}
